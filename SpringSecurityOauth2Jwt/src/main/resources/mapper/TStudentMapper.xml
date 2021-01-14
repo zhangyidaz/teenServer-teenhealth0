@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.mybatis.mapper.TStudentMapper">
+  <resultMap id="BaseResultMap" type="springboot.mybatis.po.TStudent">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
+    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+    <result column="class_id" jdbcType="VARCHAR" property="classId" />
+    <result column="school_id" jdbcType="VARCHAR" property="schoolId" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="stature" jdbcType="DOUBLE" property="stature" />
+    <result column="weight" jdbcType="DOUBLE" property="weight" />
+    <result column="heart_rate" jdbcType="INTEGER" property="heartRate" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="medical" jdbcType="VARCHAR" property="medical" />
+    <result column="phone_no" jdbcType="INTEGER" property="phoneNo" />
+    <result column="left_sight" jdbcType="DOUBLE" property="leftSight" />
+    <result column="right_sight" jdbcType="DOUBLE" property="rightSight" />
+  </resultMap>
+
+  <resultMap id="StudentClassGradeResultMap" type="springboot.mybatis.po.TStudentCustom">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
+    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+    <result column="class_id" jdbcType="VARCHAR" property="classId" />
+    <result column="school_id" jdbcType="VARCHAR" property="schoolId" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="stature" jdbcType="DOUBLE" property="stature" />
+    <result column="weight" jdbcType="DOUBLE" property="weight" />
+    <result column="heart_rate" jdbcType="INTEGER" property="heartRate" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="medical" jdbcType="VARCHAR" property="medical" />
+    <result column="phone_no" jdbcType="INTEGER" property="phoneNo" />
+    <result column="left_sight" jdbcType="DOUBLE" property="leftSight" />
+    <result column="right_sight" jdbcType="DOUBLE" property="rightSight" />
+
+    <association property="tClass" javaType="springboot.mybatis.po.TClass">
+      <id column="id" jdbcType="VARCHAR" property="id" />
+      <result column="class_name" jdbcType="VARCHAR" property="className" />
+      <result column="teacher_id" jdbcType="VARCHAR" property="teacherId" />
+      <result column="grade_id" jdbcType="VARCHAR" property="gradeId" />
+      <result column="class_code_id" jdbcType="VARCHAR" property="classCodeId" />
+      <result column="school_id" jdbcType="VARCHAR" property="schoolId" />
+      <result column="remarke" jdbcType="VARCHAR" property="remarke" />
+      <result column="students_number" jdbcType="INTEGER" property="studentsNumber" />
+      <result column="isEnd" jdbcType="INTEGER" property="isend" />
+    </association>
+    <association property="tGrade" javaType="springboot.mybatis.po.TGrade">
+      <id column="id" jdbcType="VARCHAR" property="id" />
+      <result column="grade_name" jdbcType="VARCHAR" property="gradeName" />
+      <result column="sort" jdbcType="INTEGER" property="sort" />
+    </association>
+  </resultMap>
+  
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, student_no, student_name, class_id, school_id, age, sex, stature, weight, heart_rate, 
+    id_card, create_time, medical, phone_no, left_sight, right_sight
+  </sql>
+
+  <sql id="StudentClassGrade_Column_List">
+    s.id, s.student_no, s.student_name, s.class_id, s.school_id, s.age, s.sex, s.stature, s.weight, s.heart_rate,
+     s.create_time, s.medical, s.phone_no, s.left_sight, s.right_sight,
+     c.class_name, c.teacher_id, c.grade_id, c.class_code_id, c.school_id, c.remarke, c.students_number, c.is_end,
+     g.grade_name, g.sort
+  </sql>
+
+  <select id="selectByExample" parameterType="springboot.mybatis.po.TStudentExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Mon Mar 23 10:53:04 CST 2020.
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <!--查询学生信息列表-->
+  <select id="selectStudent" parameterType="java.lang.String" resultMap="StudentClassGradeResultMap">
+    select
+    <include refid="StudentClassGrade_Column_List" />
+    from t_student s,t_class c,t_grade g WHERE s.class_id=c.id and c.grade_id=g.id
+  </select>
+
+  <!--查询学生信息列表-->
+  <select id="selectStudentbyClassid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_student where class_id=#{classId,jdbcType=VARCHAR}
+  </select>
+
+  <!--根据学生id关联年级班级查询-->
+  <select id="selectStudentClassGradeById" parameterType="java.lang.String" resultMap="StudentClassGradeResultMap">
+    SELECT <include refid="StudentClassGrade_Column_List" />
+    FROM t_student s,t_class c,t_grade g
+    WHERE s.id=#{id,jdbcType=VARCHAR} AND s.class_id=c.id AND c.grade_id= g.id
+  </select>
+
+  <!-- 根据姓名或学号查询学生信息 -->
+  <select id="selectByNameStudentNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_student
+    where student_no=#{NameStudentNo,jdbcType=VARCHAR} or student_name=#{NameStudentNo,jdbcType=VARCHAR}
+  </select>
+
+<!-- 查询班级人数 -->
+  <select id="selectStudentNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select
+    COUNT(student_no)
+    from t_student
+    where class_id=#{ClassId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_student
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Mon Mar 23 10:53:04 CST 2020.
+    -->
+    delete from t_student
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="springboot.mybatis.po.TStudentExample">
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Mon Mar 23 10:53:04 CST 2020.
+    -->
+    delete from t_student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="springboot.mybatis.po.TStudent">
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Mon Mar 23 10:53:04 CST 2020.
+    -->
+    insert into t_student (id, student_no, student_name, 
+      class_id, school_id, age, 
+      sex, stature, weight, 
+      heart_rate, id_card, create_time, 
+      medical, phone_no, left_sight, 
+      right_sight)
+    values (#{id,jdbcType=VARCHAR}, #{studentNo,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR}, 
+      #{classId,jdbcType=VARCHAR}, #{schoolId,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{sex,jdbcType=INTEGER}, #{stature,jdbcType=DOUBLE}, #{weight,jdbcType=DOUBLE}, 
+      #{heartRate,jdbcType=INTEGER}, #{idCard,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{medical,jdbcType=VARCHAR}, #{phoneNo,jdbcType=INTEGER}, #{leftSight,jdbcType=DOUBLE}, 
+      #{rightSight,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="springboot.mybatis.po.TStudent">
+   <!--自动生成uuid-->
+    <selectKey keyProperty="id" resultType="String" order="BEFORE">
+    select  replace(uuid(),'-','')   from dual
+    </selectKey>
+    insert into t_student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="studentNo != null">
+        student_no,
+      </if>
+      <if test="studentName != null">
+        student_name,
+      </if>
+      <if test="classId != null">
+        class_id,
+      </if>
+      <if test="schoolId != null">
+        school_id,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="stature != null">
+        stature,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="heartRate != null">
+        heart_rate,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="medical != null">
+        medical,
+      </if>
+      <if test="phoneNo != null">
+        phone_no,
+      </if>
+      <if test="leftSight != null">
+        left_sight,
+      </if>
+      <if test="rightSight != null">
+        right_sight,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNo != null">
+        #{studentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null">
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null">
+        #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="stature != null">
+        #{stature,jdbcType=DOUBLE},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="heartRate != null">
+        #{heartRate,jdbcType=INTEGER},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="medical != null">
+        #{medical,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null">
+        #{phoneNo,jdbcType=INTEGER},
+      </if>
+      <if test="leftSight != null">
+        #{leftSight,jdbcType=DOUBLE},
+      </if>
+      <if test="rightSight != null">
+        #{rightSight,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="springboot.mybatis.po.TStudentExample" resultType="java.lang.Integer">
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Mon Mar 23 10:53:04 CST 2020.
+    -->
+    select count(*) from t_student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Mon Mar 23 10:53:04 CST 2020.
+    -->
+    update t_student
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentNo != null">
+        student_no = #{record.studentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentName != null">
+        student_name = #{record.studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classId != null">
+        class_id = #{record.classId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolId != null">
+        school_id = #{record.schoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.age != null">
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.stature != null">
+        stature = #{record.stature,jdbcType=DOUBLE},
+      </if>
+      <if test="record.weight != null">
+        weight = #{record.weight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.heartRate != null">
+        heart_rate = #{record.heartRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.idCard != null">
+        id_card = #{record.idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.medical != null">
+        medical = #{record.medical,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNo != null">
+        phone_no = #{record.phoneNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.leftSight != null">
+        left_sight = #{record.leftSight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rightSight != null">
+        right_sight = #{record.rightSight,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Mon Mar 23 10:53:04 CST 2020.
+    -->
+    update t_student
+    set id = #{record.id,jdbcType=VARCHAR},
+      student_no = #{record.studentNo,jdbcType=VARCHAR},
+      student_name = #{record.studentName,jdbcType=VARCHAR},
+      class_id = #{record.classId,jdbcType=VARCHAR},
+      school_id = #{record.schoolId,jdbcType=VARCHAR},
+      age = #{record.age,jdbcType=INTEGER},
+      sex = #{record.sex,jdbcType=INTEGER},
+      stature = #{record.stature,jdbcType=DOUBLE},
+      weight = #{record.weight,jdbcType=DOUBLE},
+      heart_rate = #{record.heartRate,jdbcType=INTEGER},
+      id_card = #{record.idCard,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      medical = #{record.medical,jdbcType=VARCHAR},
+      phone_no = #{record.phoneNo,jdbcType=INTEGER},
+      left_sight = #{record.leftSight,jdbcType=DOUBLE},
+      right_sight = #{record.rightSight,jdbcType=DOUBLE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <!-- 修改学生信息 -->
+  <update id="updateByPrimaryKeySelective" parameterType="springboot.mybatis.po.TStudent">
+    update t_student
+    <set>
+      <if test="studentNo != null">
+        student_no = #{studentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null">
+        student_name = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null">
+        class_id = #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null">
+        school_id = #{schoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="stature != null">
+        stature = #{stature,jdbcType=DOUBLE},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="heartRate != null">
+        heart_rate = #{heartRate,jdbcType=INTEGER},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="medical != null">
+        medical = #{medical,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null">
+        phone_no = #{phoneNo,jdbcType=INTEGER},
+      </if>
+      <if test="leftSight != null">
+        left_sight = #{leftSight,jdbcType=DOUBLE},
+      </if>
+      <if test="rightSight != null">
+        right_sight = #{rightSight,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="springboot.mybatis.po.TStudent">
+    <!--
+      WARNING - @mbggenerated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      This element was generated on Mon Mar 23 10:53:04 CST 2020.
+    -->
+    update t_student
+    set student_no = #{studentNo,jdbcType=VARCHAR},
+      student_name = #{studentName,jdbcType=VARCHAR},
+      class_id = #{classId,jdbcType=VARCHAR},
+      school_id = #{schoolId,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=INTEGER},
+      stature = #{stature,jdbcType=DOUBLE},
+      weight = #{weight,jdbcType=DOUBLE},
+      heart_rate = #{heartRate,jdbcType=INTEGER},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      medical = #{medical,jdbcType=VARCHAR},
+      phone_no = #{phoneNo,jdbcType=INTEGER},
+      left_sight = #{leftSight,jdbcType=DOUBLE},
+      right_sight = #{rightSight,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

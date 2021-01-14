@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="springboot.mybatis.mapper.ExcelOutputMapper" >
+
+    <!--联合学生体测综合列表查询-->
+    <resultMap id="SyntheticDateResultMap" type="springboot.mybatis.po.ExcelOutput">
+        <association property="tStudent" javaType="springboot.mybatis.po.TStudent">
+            <id column="id" jdbcType="VARCHAR" property="id" />
+            <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
+            <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+            <result column="class_id" jdbcType="VARCHAR" property="classId" />
+            <result column="age" jdbcType="INTEGER" property="age" />
+            <result column="sex" jdbcType="INTEGER" property="sex" />
+            <result column="stature" jdbcType="DOUBLE" property="stature" />
+            <result column="weight" jdbcType="DOUBLE" property="weight" />
+            <result column="heart_rate" jdbcType="INTEGER" property="heartRate" />
+            <result column="medical" jdbcType="VARCHAR" property="medical" />
+            <result column="left_sight" jdbcType="DOUBLE" property="leftSight" />
+            <result column="right_sight" jdbcType="DOUBLE" property="rightSight" />
+        </association>
+
+        <association property="tCardiopulmonary" javaType="springboot.mybatis.po.TCardiopulmonary">
+            <id column="id" jdbcType="VARCHAR" property="id" />
+            <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+            <result column="equipment_id" jdbcType="VARCHAR" property="equipmentId" />
+            <result column="first_speed" jdbcType="INTEGER" property="firstSpeed" />
+            <result column="first_hr" jdbcType="INTEGER" property="firstHr" />
+            <result column="first_power" jdbcType="INTEGER" property="firstPower" />
+            <result column="second_speed" jdbcType="INTEGER" property="secondSpeed" />
+            <result column="second_hr" jdbcType="INTEGER" property="secondHr" />
+            <result column="second_power" jdbcType="INTEGER" property="secondPower" />
+            <result column="max_power" jdbcType="INTEGER" property="maxPower" />
+            <result column="score" jdbcType="INTEGER" property="score" />
+            <result column="heart_rate" jdbcType="INTEGER" property="heartRate" />
+            <result column="oxygen_uptake" jdbcType="DOUBLE" property="oxygenUptake" />
+            <result column="int_hr_k" jdbcType="DOUBLE" property="intHrK" />
+            <result column="int_hr_b" jdbcType="DOUBLE" property="intHrB" />
+            <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+            <result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime" />
+            <result column="fc" jdbcType="DOUBLE" property="fc" />
+            <result column="suggestion" jdbcType="LONGVARCHAR" property="suggestion" />
+        </association>
+
+        <association property="tSomaticGame" javaType="springboot.mybatis.po.TSomaticGame">
+            <id column="id" property="id" jdbcType="VARCHAR" />
+            <result column="student_id" property="studentId" jdbcType="VARCHAR" />
+            <result column="test_item" property="testItem" jdbcType="INTEGER" />
+            <result column="score_flex" property="scoreFlex" jdbcType="INTEGER" />
+            <result column="score_blan" property="scoreBlan" jdbcType="INTEGER" />
+            <result column="score_jump" property="scoreJump" jdbcType="INTEGER" />
+            <result column="score_choosetime" property="scoreChoosetime" jdbcType="INTEGER" />
+            <result column="result_flex" property="resultFlex" jdbcType="REAL" />
+            <result column="result_blan" property="resultBlan" jdbcType="REAL" />
+            <result column="result_jump" property="resultJump" jdbcType="REAL" />
+            <result column="result_choosetime" property="resultChoosetime" jdbcType="REAL" />
+            <result column="level_flex" property="levelFlex" jdbcType="VARCHAR" />
+            <result column="level_blan" property="levelBlan" jdbcType="VARCHAR" />
+            <result column="level_jump" property="levelJump" jdbcType="VARCHAR" />
+            <result column="level_choosetime" property="levelChoosetime" jdbcType="VARCHAR" />
+            <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+            <result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP" />
+            <result column="sugg_flex" property="suggFlex" jdbcType="LONGVARCHAR" />
+            <result column="sugg_blan" property="suggBlan" jdbcType="LONGVARCHAR" />
+            <result column="sugg_jump" property="suggJump" jdbcType="LONGVARCHAR" />
+            <result column="sugg_choosetime" property="suggChoosetime" jdbcType="LONGVARCHAR" />
+        </association>
+
+        <association property="tEyesight" javaType="springboot.mybatis.po.TEyesight">
+            <id column="id" jdbcType="VARCHAR" property="id" />
+            <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+            <result column="left_nwz" jdbcType="VARCHAR" property="leftNwz" />
+            <result column="right_nwz" jdbcType="VARCHAR" property="rightNwz" />
+            <result column="left_sxz" jdbcType="VARCHAR" property="leftSxz" />
+            <result column="right_sxz" jdbcType="VARCHAR" property="rightSxz" />
+            <result column="left_sxx" jdbcType="VARCHAR" property="leftSxx" />
+            <result column="right_sxx" jdbcType="VARCHAR" property="rightSxx" />
+            <result column="test_advice" jdbcType="VARCHAR" property="testadvice" />
+            <result column="train_plan" jdbcType="VARCHAR" property="trainplan" />
+            <result column="eating_advice" jdbcType="VARCHAR" property="eatingadvice" />
+            <result column="execising_advice" jdbcType="VARCHAR" property="execisingadvice" />
+            <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+            <result column="upload_time" jdbcType="TIMESTAMP" property="uploadtime" />
+        </association>
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    s.id, s.student_no, s.student_name, s.age, s.sex, s.stature, s.weight, s.left_sight, s.right_sight,
+    c.max_power, c.score, c.heart_rate, c.oxygen_uptake, c.upload_time, c.fc, c.suggestion,
+    b.score_flex, b.score_blan, b.score_jump, b.score_choosetime, b.result_flex, b.result_blan, b.result_jump,
+    b.result_choosetime, b.level_flex, b.level_blan, b.level_jump, b.level_choosetime, b.sugg_flex, b.sugg_blan, b.sugg_jump,
+    b.sugg_choosetime,
+    e.student_id, e.left_nwz, e.right_nwz, e.left_sxz, e.right_sxz, e.left_sxx, e.right_sxx, e.test_advice,
+    e.train_plan, e.eating_advice, e.execising_advice
+  </sql>
+
+    <select id="selcetSyntheticDateBystudentNo" parameterType="springboot.mybatis.po.ExcelOutput" resultMap="SyntheticDateResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        t_student s,
+        t_cardiopulmonary c,
+        t_somatic_game b,
+        t_eyesight e
+        WHERE
+        s.`id`=#{id,jdbcType=VARCHAR}
+        AND c.create_time = (
+        SELECT
+        MAX(
+        t_cardiopulmonary.create_time
+        )
+        FROM
+        t_cardiopulmonary
+        WHERE
+        t_cardiopulmonary.`student_id`=#{id,jdbcType=VARCHAR}
+        )
+        AND b.upload_time = (
+        SELECT
+        MAX(t_somatic_game.upload_time)
+        FROM
+        t_somatic_game
+        WHERE
+        t_somatic_game.`student_id`=#{id,jdbcType=VARCHAR}
+        )
+        AND e.create_time = (
+        SELECT
+        MAX(t_eyesight.create_time)
+        FROM
+        t_eyesight
+        WHERE
+        t_eyesight.`student_id` = #{id,jdbcType=VARCHAR}
+        )
+    </select>
+
+</mapper>
