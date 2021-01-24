@@ -42,11 +42,21 @@ public class NewSomaticGameController {
     //根据体感游戏测试记录id查询详细体感游戏测试报告
     @PostMapping("/somaticgamehistory1/{id}")
     @ResponseBody
+    public CommonResult SomaticHistory(@PathVariable("id")String somaticid,@RequestBody PageInfo pageInfo){
+        Page page=PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
+        TSomaticGame tSomaticGame=tSomaticGameService.selectStudentSomatioc(somaticid);
+        PageInfo<TSomaticGameCustom> pageInfo1=new PageInfo<TSomaticGameCustom>(page.getResult());
+        return CommonResult.success(pageInfo1);
+    }
+
+    //根据体感游戏测试记录id查询详细体感游戏测试报告
+    /*@PostMapping("/somaticgamehistory1/{id}")
+    @ResponseBody
     public CommonResult SomaticHistory(@PathVariable("id") String somaticid){
         TSomaticGame tSomaticGame=tSomaticGameService.selectStudentSomatioc(somaticid);
         return CommonResult.success(tSomaticGame);
     }
-
+*/
     //查询所有学生体感游戏处方
     @RequestMapping("/somaticplanlist1")
     @ResponseBody
