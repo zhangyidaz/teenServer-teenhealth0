@@ -141,7 +141,7 @@ public class NewTeacherController {
     }
 
     //班级信息页面
-    @GetMapping("/classinfo1/{classId}")
+    @PostMapping("/classinfo1/{classId}")
     @ResponseBody
     public CommonResult ClassInfo(@PathVariable("classId")String classId ,@RequestBody PageInfo pageInfo){
         Page page=PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
@@ -155,7 +155,7 @@ public class NewTeacherController {
     @ResponseBody
     public CommonResult GradeClass(@PathVariable("gradeId")String gradeid,@RequestBody PageInfo pageInfo){
         Page page=PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
-        Collection<TClassCustom> tClassCustoms=classService.selectClassbyGradeid(gradeid);
+        List<TClassCustom> tClassCustoms=classService.selectClassbyGradeid(gradeid);
         PageInfo<TClassCustom>tClassCustomPageInfo=new PageInfo<TClassCustom>(page.getResult());
         return CommonResult.success(tClassCustomPageInfo);
     }
