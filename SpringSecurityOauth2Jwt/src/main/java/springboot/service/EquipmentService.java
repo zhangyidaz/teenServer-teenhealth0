@@ -20,4 +20,7 @@ public interface EquipmentService {
 
     //删除设备
     Integer deleteEquipment(String id);
+
+    //设备号查重
+    TEquipment selectEquipmentNO(String equipmentNo);
 }

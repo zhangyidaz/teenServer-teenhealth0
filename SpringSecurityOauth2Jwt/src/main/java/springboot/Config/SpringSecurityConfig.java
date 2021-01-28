@@ -53,13 +53,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/userlogin")
-                .failureUrl("/login?error")
-                .defaultSuccessUrl("/teacher/homepage")
+                .failureUrl("/loginError")
+//                .failureUrl("/login?error")
+//                .defaultSuccessUrl("/teacher/homepage")
+                .defaultSuccessUrl("/loginSuccess")
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
         //开启自动配置的注销功能
-        http.logout().logoutUrl("/logout").logoutSuccessUrl("/userlogin"); //注销成功后返回主页
+        http.logout().logoutUrl("/logout").logoutSuccessUrl("/login"); //注销成功后返回主页
         //开启记住登录功能,过期时间60s
         http.rememberMe().tokenRepository(persistentTokenRepository())  //开启持久化token
                 .rememberMeParameter("rememberMe").tokenValiditySeconds(60*60);

@@ -10,8 +10,11 @@ public interface StudentService {
     //查询所有学生列表
     public List<TStudentCustom> listStudent();
 
+    //根据学号查询学生信息
+    List<TStudent> selectByStudentNo(String studentNo);
+
     //根据姓名或学号查询学生信息
-    public TStudent selectByNameStudentNo(String NameStudentNo)throws Exception;
+    public List<TStudent> selectByNameStudentNo(String NameStudentNo)throws Exception;
 
     //根据学生id查询学生年级班级信息
     public TStudentCustom selectBystudentId(String id);
@@ -30,5 +33,6 @@ public interface StudentService {
 
     //根据classid查询班级下学生信息
     public List<TStudent> listStudentbyClass(String classId);
+
 
 }

@@ -43,4 +43,10 @@ public class EquipmentServiceImpl implements EquipmentService {
     public Integer deleteEquipment(String id){
         return tEquipmentMapper.deleteById(id);
     }
+
+    //设备号查重
+    @Override
+    public TEquipment selectEquipmentNO(String equipmentNo){
+        return tEquipmentMapper.selectEquipmentNO(equipmentNo);
+    }
 }

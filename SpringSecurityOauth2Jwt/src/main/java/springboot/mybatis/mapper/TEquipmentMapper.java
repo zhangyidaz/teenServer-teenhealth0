@@ -44,4 +44,6 @@ public interface TEquipmentMapper {
 
 //  删除设备信息
     int deleteById(String id);
+
+    TEquipment selectEquipmentNO(String equipmentNo);
 }

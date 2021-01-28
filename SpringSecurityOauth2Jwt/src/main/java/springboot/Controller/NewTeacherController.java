@@ -160,6 +160,14 @@ public class NewTeacherController {
         return CommonResult.success(tClassCustomPageInfo);
     }
 
+    //根据年级id查询班级
+    @GetMapping("/selectClassByGrade1/{gradeid}")
+    @ResponseBody
+    public CommonResult selectClassByGrade(@PathVariable("gradeid")String gradeid){
+        List<TClassCustom> tClassCustoms=classService.selectClassbyGradeid(gradeid);
+        return CommonResult.success(tClassCustoms);
+    }
+
     //删除班级
     @GetMapping("/deleteclass1/{id}")
     @ResponseBody
@@ -210,24 +218,38 @@ public class NewTeacherController {
     ///////////////////以下为新旧前端通用代码/////////////////////////////
 
     //查询学生帐号是否重复
-    @GetMapping("/checkstudentNo1/{studentNo}")
+    /*@GetMapping("/checkstudentNo1/{studentNo}")
     @ResponseBody
     public String checkStudentNo(@PathVariable("studentNo") String studentNo)throws Exception{
         System.out.println(studentNo);
-        TStudent tStudent=studentService.selectByNameStudentNo(studentNo);
+        List<TStudent> tStudent=studentService.selectByNameStudentNo(studentNo);
         if(tStudent==null){
             return "0";
         }else {
             return "1";
         }
+    }*/
+
+    //查询学生帐号是否重复
+    @GetMapping("/checkstudentNo1/{studentNo}")
+    @ResponseBody
+    public CommonResult checkStudentNo(@PathVariable("studentNo") String studentNo)throws Exception{
+        System.out.println(studentNo);
+        List<TStudent> studentList=studentService.selectByStudentNo(studentNo);
+        if(studentList.size()==0){
+            return CommonResult.success();
+        }else {
+            return CommonResult.fail();
+        }
     }
 
-    //模糊查询学生信息
+    //根据姓名或学号模糊查询学生信息
     @RequestMapping("/selectByNameStudentNo1")
     @ResponseBody
-    public TStudent SelectByNameStudentNo(String NameStudentNo) throws Exception{
-        TStudent tStudent=studentService.selectByNameStudentNo(NameStudentNo);
-        return tStudent;
+    public CommonResult SelectByNameStudentNo(@RequestBody Map<String, String> requestMap ) throws Exception{
+        String NameStudentNo=requestMap.get("NameStudentNo");
+        List<TStudent> studentList=studentService.selectByNameStudentNo(NameStudentNo);
+        return CommonResult.success(studentList);
     }
 
     //返回班级列表

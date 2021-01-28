@@ -23,7 +23,7 @@ public class StudentServiceImpl implements StudentService {
 
     //根据姓名或学号查询学生信息
     @Override
-    public TStudent selectByNameStudentNo(String NameStudentNo)throws Exception{
+    public List<TStudent> selectByNameStudentNo(String NameStudentNo)throws Exception{
         return tStudentMapper.selectByNameStudentNo(NameStudentNo);
     }
 
@@ -63,5 +63,9 @@ public class StudentServiceImpl implements StudentService {
         return tStudentMapper.selectStudentbyClassid(classId);
     }
 
-
+    //根据学号查询学生信息
+    @Override
+    public List<TStudent> selectByStudentNo(String studentNo){
+        return tStudentMapper.selectByStudentNo(studentNo);
+    }
 }

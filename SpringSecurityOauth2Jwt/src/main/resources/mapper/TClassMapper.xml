@@ -209,8 +209,8 @@
   <!--根据gradeid查询班级列表附加老师年级信息-->
   <select id="selectClassbyGradeid" parameterType="java.lang.String" resultMap="WithTeacherandGradeResultMap">
     select
-    <include refid="WithTeacherandGrade_Column_List" />
-    from t_class,t_teacher,t_grade where t_class.grade_id=#{gradeId,jdbcType=VARCHAR} and t_teacher.id=t_class.teacher_id
+    <include refid="WithTeacher_Column_List" />
+    from t_class,t_teacher where t_class.grade_id=#{gradeId,jdbcType=VARCHAR} and t_teacher.id=t_class.teacher_id
   </select>
 
   <!--根据gradeid查询班级名称列表-->

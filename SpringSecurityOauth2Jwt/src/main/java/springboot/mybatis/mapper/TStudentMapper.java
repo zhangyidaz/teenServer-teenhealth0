@@ -38,10 +38,13 @@ public interface TStudentMapper {
     List<TStudentCustom>selectStudent();
 
     //根据姓名或学号查询学生信息
-    TStudent selectByNameStudentNo(String NameStudentNo);
+    List<TStudent> selectByNameStudentNo(String NameStudentNo);
 
     //查询班级人数
     Integer selectStudentNum(String ClassId);
 
     List<TStudent> selectStudentbyClassid(String classId);
+
+    //根据学号查询学生信息
+    List<TStudent> selectByStudentNo(String studentNo);
 }

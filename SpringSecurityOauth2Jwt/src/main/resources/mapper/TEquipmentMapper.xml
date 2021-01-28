@@ -126,6 +126,14 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
+  <!--根据编号查找设备信息-->
+  <select id="selectEquipmentNO" parameterType="springboot.mybatis.po.TEquipment" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from t_equipment
+    where  equipment_no= #{equipmentNo,jdbcType=VARCHAR}
+  </select>
+
   <select id="selectAllEquipment" parameterType="springboot.mybatis.po.TEquipment" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

@@ -236,7 +236,7 @@ public class TeacherController {
     @ResponseBody
     public String checkStudentNo(@PathVariable("studentNo") String studentNo)throws Exception{
         System.out.println(studentNo);
-        TStudent tStudent=studentService.selectByNameStudentNo(studentNo);
+        List<TStudent> tStudent=studentService.selectByNameStudentNo(studentNo);
         if(tStudent==null){
             return "0";
         }else {
@@ -244,13 +244,6 @@ public class TeacherController {
         }
     }
 
-    //模糊查询学生信息
-    @RequestMapping("/selectByNameStudentNo")
-    @ResponseBody
-    public TStudent SelectByNameStudentNo(String NameStudentNo) throws Exception{
-        TStudent tStudent=studentService.selectByNameStudentNo(NameStudentNo);
-        return tStudent;
-    }
 
     //返回班级列表
     @RequestMapping(value = "getClassList")

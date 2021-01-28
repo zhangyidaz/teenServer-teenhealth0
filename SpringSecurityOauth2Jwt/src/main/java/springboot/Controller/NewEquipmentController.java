@@ -74,4 +74,16 @@ public class NewEquipmentController {
         }
     }
 
+    //设备号查重
+    @GetMapping("/selectEquipmentNO/{equipmentNo}")
+    @ResponseBody
+    public CommonResult selectEquipmentNO(@PathVariable("equipmentNo")String equipmentNo){
+        TEquipment tEquipment=equipmentService.selectEquipmentNO(equipmentNo);
+        if(tEquipment!=null){
+            return CommonResult.fail();
+        }else {
+            return CommonResult.success();
+        }
+    }
+
 }
