@@ -243,14 +243,31 @@ public class NewTeacherController {
         }
     }
 
-    //根据姓名或学号模糊查询学生信息
+    /*//根据姓名或学号模糊查询学生信息
     @RequestMapping("/selectByNameStudentNo1")
     @ResponseBody
     public CommonResult SelectByNameStudentNo(@RequestBody Map<String, String> requestMap ) throws Exception{
         String NameStudentNo=requestMap.get("NameStudentNo");
         List<TStudent> studentList=studentService.selectByNameStudentNo(NameStudentNo);
         return CommonResult.success(studentList);
+    }*/
+
+    //根据姓名或学号模糊查询学生信息
+    @RequestMapping("/selectByNameStudentNo1")
+    @ResponseBody
+    public CommonResult SelectByNameStudentNo(@RequestBody Map<String, String> requestMap) throws Exception{
+        Map<String,String> map= JSONObject.fromObject(requestMap);
+        String pagenum=map.get("pageNum");
+        String pagesize=map.get("pageSize");
+        int pageNum = Integer.parseInt(pagenum);
+        int pageSize=Integer.parseInt(pagesize);
+        Page page=PageHelper.startPage(pageNum,pageSize);
+        String NameStudentNo=requestMap.get("NameStudentNo");
+        List<TStudent> studentList=studentService.selectByNameStudentNo(NameStudentNo);
+        PageInfo<TStudent> pageInfo1=new PageInfo<TStudent>(page.getResult());
+        return CommonResult.success(pageInfo1);
     }
+
 
     //返回班级列表
     @RequestMapping(value = "getClassList1")
@@ -260,6 +277,14 @@ public class NewTeacherController {
         String gradeid=map.get("data");
         List<TClass> tClasses=grandClassService.selectClass(gradeid);
         return tClasses;
+    }
+
+    //查询所有老师信息
+    @RequestMapping("/selectAllTeacher1")
+    @ResponseBody
+    public CommonResult SelectAllTeacher(){
+        List<TTeacher> tTeacher=tTeacherService.selectAllTeacher();
+        return CommonResult.success(tTeacher);
     }
 
 }

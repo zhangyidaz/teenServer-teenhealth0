@@ -21,4 +21,9 @@ public class TTeacherServiceImpl implements TTeacherService {
     public TTeacher selectTeacherbyId(String id){
         return tTeacherMapper.selectByPrimaryKey(id);
     }
+
+    //查询所有老师信息
+    public List<TTeacher> selectAllTeacher(){
+        return tTeacherMapper.listTeachers();
+    }
 }

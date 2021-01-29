@@ -114,6 +114,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
+  <!--查询所有老师-->
   <select id="listTeachers" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
