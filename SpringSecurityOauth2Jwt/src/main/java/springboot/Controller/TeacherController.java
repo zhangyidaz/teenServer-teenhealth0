@@ -236,7 +236,7 @@ public class TeacherController {
     @ResponseBody
     public String checkStudentNo(@PathVariable("studentNo") String studentNo)throws Exception{
         System.out.println(studentNo);
-        List<TStudent> tStudent=studentService.selectByNameStudentNo(studentNo);
+        List<TStudent> tStudent=studentService.selectByStudentNo(studentNo);
         if(tStudent==null){
             return "0";
         }else {

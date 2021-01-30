@@ -169,11 +169,12 @@
   </select>
 
   <!-- 根据姓名或学号模糊查询学生信息 -->
-  <select id="selectByNameStudentNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByNameStudentNo" parameterType="java.lang.String" resultMap="StudentClassGradeResultMap">
     select
-    <include refid="Base_Column_List" />
-    from t_student
+    <include refid="StudentClassGrade_Column_List" />
+    from t_student s,t_class c,t_grade g
     where student_no like CONCAT('%',#{NameStudentNo,jdbcType=VARCHAR},'%')  or student_name like CONCAT('%',#{NameStudentNo,jdbcType=VARCHAR},'%')
+    AND s.class_id=c.id AND c.grade_id= g.id
   </select>
 
   <!--根据学号查询学生信息-->

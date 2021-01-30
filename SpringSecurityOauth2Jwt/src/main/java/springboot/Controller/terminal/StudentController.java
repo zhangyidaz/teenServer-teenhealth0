@@ -21,7 +21,7 @@ public class StudentController {
     @RequestMapping(value = {"/student_login"},produces="application/json;charset=UTF-8")
     public Msg studentLogin(@RequestBody Map<String, String> requestMap)throws Exception{
         String studentNo=requestMap.get("studentNo");
-        List<TStudent> tStudent=studentService.selectByNameStudentNo(studentNo);
+        List<TStudent> tStudent=studentService.selectByStudentNo(studentNo);
         if(tStudent!=null){
             return Msg.success(tStudent);
         }else {

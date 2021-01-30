@@ -21,9 +21,9 @@ public class StudentServiceImpl implements StudentService {
         return tStudentMapper.selectStudent();
     }
 
-    //根据姓名或学号查询学生信息
+    //根据姓名或学号模糊查询学生信息
     @Override
-    public List<TStudent> selectByNameStudentNo(String NameStudentNo)throws Exception{
+    public List<TStudentCustom> selectByNameStudentNo(String NameStudentNo)throws Exception{
         return tStudentMapper.selectByNameStudentNo(NameStudentNo);
     }
 

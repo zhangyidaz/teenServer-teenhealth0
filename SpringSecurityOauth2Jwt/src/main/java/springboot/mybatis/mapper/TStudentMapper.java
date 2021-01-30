@@ -37,8 +37,8 @@ public interface TStudentMapper {
     //获取学生基本信息列表
     List<TStudentCustom>selectStudent();
 
-    //根据姓名或学号查询学生信息
-    List<TStudent> selectByNameStudentNo(String NameStudentNo);
+    //根据姓名或学号模糊查询学生信息
+    List<TStudentCustom> selectByNameStudentNo(String NameStudentNo);
 
     //查询班级人数
     Integer selectStudentNum(String ClassId);

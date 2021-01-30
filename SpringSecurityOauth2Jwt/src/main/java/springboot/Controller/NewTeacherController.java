@@ -263,8 +263,8 @@ public class NewTeacherController {
         int pageSize=Integer.parseInt(pagesize);
         Page page=PageHelper.startPage(pageNum,pageSize);
         String NameStudentNo=requestMap.get("NameStudentNo");
-        List<TStudent> studentList=studentService.selectByNameStudentNo(NameStudentNo);
-        PageInfo<TStudent> pageInfo1=new PageInfo<TStudent>(page.getResult());
+        List<TStudentCustom> studentList=studentService.selectByNameStudentNo(NameStudentNo);
+        PageInfo<TStudentCustom> pageInfo1=new PageInfo<TStudentCustom>(page.getResult());
         return CommonResult.success(pageInfo1);
     }
 
