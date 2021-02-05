@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 @Controller
-@RequestMapping("/teenhealth")
+@RequestMapping("/teacher")
 public class ExcelOutputController {
     @Autowired
     private ExcelOutputService excelOutputService;
