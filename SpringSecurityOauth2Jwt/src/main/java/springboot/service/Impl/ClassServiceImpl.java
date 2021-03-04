@@ -69,4 +69,10 @@ public class ClassServiceImpl implements ClassService {
         return tClassMapper.updateByPrimaryKeySelective(tClass);
     }
 
+    //根据班级名称查询班级
+    @Override
+    public List<TClass> selectClassName(String className){
+        return tClassMapper.selectByClassName(className);
+    }
+
 }

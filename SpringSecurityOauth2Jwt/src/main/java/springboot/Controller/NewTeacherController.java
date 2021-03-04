@@ -168,6 +168,19 @@ public class NewTeacherController {
         return CommonResult.success(tClassCustoms);
     }
 
+    //查询班级名称是否重复
+    @GetMapping("/checkclassname/{className}")
+    @ResponseBody
+    public CommonResult checkClassName(@PathVariable("className") String className)throws Exception{
+        System.out.println(className);
+        List<TClass> classList=classService.selectClassName(className);
+        if(classList.size()==0){
+            return CommonResult.success();
+        }else {
+            return CommonResult.fail();
+        }
+    }
+
     //删除班级
     @GetMapping("/deleteclass1/{id}")
     @ResponseBody

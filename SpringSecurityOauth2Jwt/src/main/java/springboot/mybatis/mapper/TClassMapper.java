@@ -55,4 +55,7 @@ public interface TClassMapper {
 
     //根据班级id查询班级和年级信息
     TClassCustom selectClassGradeInfo(String classid);
+
+    //根据班级名称查询班级
+    List<TClass> selectByClassName(String className);
 }

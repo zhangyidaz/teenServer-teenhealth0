@@ -33,4 +33,7 @@ public interface ClassService {
 
     //保存班级信息
     public Integer updateClassInfo(TClass tClass);
+
+    //根据班级名称查询班级
+    List<TClass> selectClassName(String className);
 }

@@ -190,6 +190,13 @@
     from t_class
   </select>
 
+  <!--根据班级名称查询班级列表-->
+  <select id="selectByClassName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_class where class_name=#{className,jdbcType=VARCHAR} limit 1
+  </select>
+
   <!--获取所有年级班级老师信息列表-->
   <select id="ListClasses" parameterType="java.lang.String" resultMap="WithTeacherandGradeResultMap">
     select
