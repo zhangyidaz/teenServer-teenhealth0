@@ -13,17 +13,22 @@ public class TTeacherServiceImpl implements TTeacherService {
     @Autowired
     TTeacherMapper tTeacherMapper;
 
-    public List<TTeacher> selectteachers(){
-        return tTeacherMapper.listTeachers();
-    }
-
     //根据id查询老师信息
+    @Override
     public TTeacher selectTeacherbyId(String id){
         return tTeacherMapper.selectByPrimaryKey(id);
     }
 
     //查询所有老师信息
+    @Override
     public List<TTeacher> selectAllTeacher(){
         return tTeacherMapper.listTeachers();
     }
+
+    //根据userId查询教师用户
+    @Override
+    public TTeacher selectTeacherbyuserId(String userId){
+        return tTeacherMapper.selectByuserId(userId);
+    }
 }
+

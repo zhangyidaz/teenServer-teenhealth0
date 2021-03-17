@@ -114,7 +114,7 @@ public class TeacherController {
     public String AddClass(Model model){
         Collection<TGrade> tGradeds=grandClassService.selectGrade();
         model.addAttribute("grades",tGradeds);
-        Collection<TTeacher> tTeachers=tTeacherService.selectteachers();
+        Collection<TTeacher> tTeachers=tTeacherService.selectAllTeacher();
         model.addAttribute("teachers",tTeachers);
         return "add_class";
     }
@@ -133,7 +133,7 @@ public class TeacherController {
     public String EditClass(Model model,@PathVariable("classId")String classId){
         TClassCustom tClassCustom=classService.selectClassGradeInfo(classId);
         model.addAttribute("class",tClassCustom);
-        Collection<TTeacher> tTeachers=tTeacherService.selectteachers();
+        Collection<TTeacher> tTeachers=tTeacherService.selectAllTeacher();
         model.addAttribute("teacher",tTeachers);
         return "edit_class";
     }

@@ -32,4 +32,7 @@ public interface TTeacherMapper {
 
     //查询所有老师
     List<TTeacher> listTeachers();
+
+    //根据userId查询老师用户
+    TTeacher selectByuserId(String userId);
 }

@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboot.mybatis.mapper.TPhysicalFitnessMapper">
+  <resultMap id="BaseResultMap" type="springboot.mybatis.po.TPhysicalFitness">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+    <result column="tzl" jdbcType="DOUBLE" property="tzl" />
+    <result column="zwtqq_data" jdbcType="DOUBLE" property="zwtqqData" />
+    <result column="zwtqq_score" jdbcType="INTEGER" property="zwtqqScore" />
+    <result column="fwc_data" jdbcType="DOUBLE" property="fwcData" />
+    <result column="fwc_score" jdbcType="INTEGER" property="fwcScore" />
+    <result column="ywqz_data" jdbcType="DOUBLE" property="ywqzData" />
+    <result column="ywqz_score" jdbcType="INTEGER" property="ywqzScore" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime" />
+  </resultMap>
+
+  <resultMap id="Custom1ResultMap" type="springboot.mybatis.po.TPhysicalFitnessCustom1">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+    <result column="tzl" jdbcType="DOUBLE" property="tzl" />
+    <result column="zwtqq_data" jdbcType="DOUBLE" property="zwtqqData" />
+    <result column="zwtqq_score" jdbcType="INTEGER" property="zwtqqScore" />
+    <result column="fwc_data" jdbcType="DOUBLE" property="fwcData" />
+    <result column="fwc_score" jdbcType="INTEGER" property="fwcScore" />
+    <result column="ywqz_data" jdbcType="DOUBLE" property="ywqzData" />
+    <result column="ywqz_score" jdbcType="INTEGER" property="ywqzScore" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime" />
+
+    <association property="tStudent" javaType="springboot.mybatis.po.TStudent">
+      <id column="id" jdbcType="VARCHAR" property="id" />
+      <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
+      <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+      <result column="sex" jdbcType="INTEGER" property="sex" />
+    </association>
+  </resultMap>
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, student_id, tzl, zwtqq_data, zwtqq_score, fwc_data, fwc_score, ywqz_data, ywqz_score, 
+    create_time, upload_time
+  </sql>
+
+  <sql id="physicalstudent_Column_List">
+    p.id, p.student_id, p.tzl, p.zwtqq_data, p.zwtqq_score, p.fwc_data, p.fwc_score, p.ywqz_data, p.ywqz_score,
+    p.create_time, p.upload_time,
+    s.student_name,	s.student_no, s.sex
+  </sql>
+
+  <select id="selectByExample" parameterType="springboot.mybatis.po.TPhysicalFitnessExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_physical_fitness
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_physical_fitness
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="ListALLPhysicalFitness" parameterType="java.lang.String" resultMap="Custom1ResultMap">
+    SELECT
+    <include refid="physicalstudent_Column_List" />
+FROM
+	t_student s,
+	t_physical_fitness p,
+	(
+		SELECT
+			*
+		FROM
+			t_physical_fitness,
+			(
+				SELECT
+					student_id AS studentid,
+					MAX(create_time) AS maxdate
+				FROM
+					t_physical_fitness
+				GROUP BY
+					student_id
+			) x
+		WHERE
+			x.studentid = t_physical_fitness.student_id
+		AND x.maxdate = t_physical_fitness.create_time
+	) y
+WHERE
+	y.id = p.id
+AND p.student_id = s.id
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_physical_fitness
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="springboot.mybatis.po.TPhysicalFitnessExample">
+    delete from t_physical_fitness
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="springboot.mybatis.po.TPhysicalFitness">
+    insert into t_physical_fitness (id, student_id, tzl, 
+      zwtqq_data, zwtqq_score, fwc_data, 
+      fwc_score, ywqz_data, ywqz_score, 
+      create_time, upload_time)
+    values (#{id,jdbcType=VARCHAR}, #{studentId,jdbcType=VARCHAR}, #{tzl,jdbcType=DOUBLE}, 
+      #{zwtqqData,jdbcType=DOUBLE}, #{zwtqqScore,jdbcType=INTEGER}, #{fwcData,jdbcType=DOUBLE}, 
+      #{fwcScore,jdbcType=INTEGER}, #{ywqzData,jdbcType=DOUBLE}, #{ywqzScore,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{uploadTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="springboot.mybatis.po.TPhysicalFitness">
+    <selectKey keyProperty="id" resultType="String" order="BEFORE" >
+      select  replace(uuid(),'-','')   from dual
+    </selectKey>
+    insert into t_physical_fitness
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="tzl != null">
+        tzl,
+      </if>
+      <if test="zwtqqData != null">
+        zwtqq_data,
+      </if>
+      <if test="zwtqqScore != null">
+        zwtqq_score,
+      </if>
+      <if test="fwcData != null">
+        fwc_data,
+      </if>
+      <if test="fwcScore != null">
+        fwc_score,
+      </if>
+      <if test="ywqzData != null">
+        ywqz_data,
+      </if>
+      <if test="ywqzScore != null">
+        ywqz_score,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="uploadTime != null">
+        upload_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="tzl != null">
+        #{tzl,jdbcType=DOUBLE},
+      </if>
+      <if test="zwtqqData != null">
+        #{zwtqqData,jdbcType=DOUBLE},
+      </if>
+      <if test="zwtqqScore != null">
+        #{zwtqqScore,jdbcType=INTEGER},
+      </if>
+      <if test="fwcData != null">
+        #{fwcData,jdbcType=DOUBLE},
+      </if>
+      <if test="fwcScore != null">
+        #{fwcScore,jdbcType=INTEGER},
+      </if>
+      <if test="ywqzData != null">
+        #{ywqzData,jdbcType=DOUBLE},
+      </if>
+      <if test="ywqzScore != null">
+        #{ywqzScore,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uploadTime != null">
+        #{uploadTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="springboot.mybatis.po.TPhysicalFitnessExample" resultType="java.lang.Long">
+    select count(*) from t_physical_fitness
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_physical_fitness
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentId != null">
+        student_id = #{record.studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tzl != null">
+        tzl = #{record.tzl,jdbcType=DOUBLE},
+      </if>
+      <if test="record.zwtqqData != null">
+        zwtqq_data = #{record.zwtqqData,jdbcType=DOUBLE},
+      </if>
+      <if test="record.zwtqqScore != null">
+        zwtqq_score = #{record.zwtqqScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.fwcData != null">
+        fwc_data = #{record.fwcData,jdbcType=DOUBLE},
+      </if>
+      <if test="record.fwcScore != null">
+        fwc_score = #{record.fwcScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.ywqzData != null">
+        ywqz_data = #{record.ywqzData,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ywqzScore != null">
+        ywqz_score = #{record.ywqzScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uploadTime != null">
+        upload_time = #{record.uploadTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_physical_fitness
+    set id = #{record.id,jdbcType=VARCHAR},
+      student_id = #{record.studentId,jdbcType=VARCHAR},
+      tzl = #{record.tzl,jdbcType=DOUBLE},
+      zwtqq_data = #{record.zwtqqData,jdbcType=DOUBLE},
+      zwtqq_score = #{record.zwtqqScore,jdbcType=INTEGER},
+      fwc_data = #{record.fwcData,jdbcType=DOUBLE},
+      fwc_score = #{record.fwcScore,jdbcType=INTEGER},
+      ywqz_data = #{record.ywqzData,jdbcType=DOUBLE},
+      ywqz_score = #{record.ywqzScore,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      upload_time = #{record.uploadTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="springboot.mybatis.po.TPhysicalFitness">
+    update t_physical_fitness
+    <set>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="tzl != null">
+        tzl = #{tzl,jdbcType=DOUBLE},
+      </if>
+      <if test="zwtqqData != null">
+        zwtqq_data = #{zwtqqData,jdbcType=DOUBLE},
+      </if>
+      <if test="zwtqqScore != null">
+        zwtqq_score = #{zwtqqScore,jdbcType=INTEGER},
+      </if>
+      <if test="fwcData != null">
+        fwc_data = #{fwcData,jdbcType=DOUBLE},
+      </if>
+      <if test="fwcScore != null">
+        fwc_score = #{fwcScore,jdbcType=INTEGER},
+      </if>
+      <if test="ywqzData != null">
+        ywqz_data = #{ywqzData,jdbcType=DOUBLE},
+      </if>
+      <if test="ywqzScore != null">
+        ywqz_score = #{ywqzScore,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uploadTime != null">
+        upload_time = #{uploadTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="springboot.mybatis.po.TPhysicalFitness">
+    update t_physical_fitness
+    set student_id = #{studentId,jdbcType=VARCHAR},
+      tzl = #{tzl,jdbcType=DOUBLE},
+      zwtqq_data = #{zwtqqData,jdbcType=DOUBLE},
+      zwtqq_score = #{zwtqqScore,jdbcType=INTEGER},
+      fwc_data = #{fwcData,jdbcType=DOUBLE},
+      fwc_score = #{fwcScore,jdbcType=INTEGER},
+      ywqz_data = #{ywqzData,jdbcType=DOUBLE},
+      ywqz_score = #{ywqzScore,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      upload_time = #{uploadTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
