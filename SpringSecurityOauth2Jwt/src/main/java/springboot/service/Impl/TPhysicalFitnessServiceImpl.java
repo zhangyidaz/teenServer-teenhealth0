@@ -25,4 +25,10 @@ public class TPhysicalFitnessServiceImpl implements TPhysicalFitnessService {
     public List<TPhysicalFitnessCustom1> ListALLPhysicalFitness(){
         return tPhysicalFitnessMapper.ListALLPhysicalFitness();
     }
+
+    //根据studentId查询测试记录
+    @Override
+    public List<TPhysicalFitnessCustom1> ListPhysicalFitnessbyStudentId(String studentId){
+        return tPhysicalFitnessMapper.ListPhysicalFitnessbyStudentId(studentId);
+    }
 }

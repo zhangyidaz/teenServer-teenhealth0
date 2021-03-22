@@ -12,4 +12,7 @@ public interface TPhysicalFitnessService {
 
     //查询所有学生体适能数据
     List<TPhysicalFitnessCustom1> ListALLPhysicalFitness();
+
+    //根据studentId查询测试记录
+    List<TPhysicalFitnessCustom1> ListPhysicalFitnessbyStudentId(String studentId);
 }

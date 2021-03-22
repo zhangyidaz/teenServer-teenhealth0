@@ -30,4 +30,6 @@ public interface TPhysicalFitnessMapper {
     int updateByPrimaryKey(TPhysicalFitness record);
 
     List<TPhysicalFitnessCustom1> ListALLPhysicalFitness();
+
+    List<TPhysicalFitnessCustom1> ListPhysicalFitnessbyStudentId(String studentId);
 }

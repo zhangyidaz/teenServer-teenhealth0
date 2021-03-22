@@ -155,6 +155,14 @@ WHERE
 AND p.student_id = s.id
   </select>
 
+  <select id="ListPhysicalFitnessbyStudentId" parameterType="java.lang.String" resultMap="Custom1ResultMap">
+    select
+    <include refid="physicalstudent_Column_List" />
+    from t_student s,
+    t_physical_fitness p
+    where s.id = #{studentId,jdbcType=VARCHAR} and p.student_id= #{studentId,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from t_physical_fitness
     where id = #{id,jdbcType=VARCHAR}
