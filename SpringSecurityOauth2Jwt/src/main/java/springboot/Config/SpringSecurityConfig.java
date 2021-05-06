@@ -50,6 +50,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/userlogin").permitAll()
                 .antMatchers("/tph/**").permitAll()
 //                .antMatchers("/teacher/**").hasRole("USER")
+                .antMatchers(HttpMethod.OPTIONS)//跨域请求会先进行一次options请求
+                .permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/userlogin")

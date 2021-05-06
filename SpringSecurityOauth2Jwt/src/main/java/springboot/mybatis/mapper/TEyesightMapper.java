@@ -1,6 +1,7 @@
 package springboot.mybatis.mapper;
 
 import springboot.mybatis.po.TEyesight;
+import springboot.mybatis.po.TEyesightCustom;
 import springboot.mybatis.po.TEyesightExample;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,5 +31,5 @@ public interface TEyesightMapper {
 
     int updateByPrimaryKey(TEyesight record);
 
-    List<TEyesight> ListEyesight();
+    List<TEyesightCustom> ListEyesight();
 }

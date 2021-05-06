@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springboot.mybatis.po.CommonResult;
 import springboot.mybatis.po.TEyesight;
+import springboot.mybatis.po.TEyesightCustom;
 import springboot.service.TEyesightService;
 
 import java.util.List;
@@ -21,12 +22,12 @@ public class EyesightController {
     private TEyesightService tEyesightService;
 
     //在页面显示所有学生视力信息
-    @GetMapping("/eyesightlist")
+    @PostMapping("/eyesightlist")
     @ResponseBody
-    public CommonResult<TEyesight> EyesightList(@RequestBody PageInfo pageInfo){
+    public CommonResult<TEyesightCustom> EyesightList(@RequestBody PageInfo pageInfo){
         Page page=PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize());
-        List<TEyesight> ListEyesight=tEyesightService.ListEyesight();
-        PageInfo<TEyesight> pageInfo1=new PageInfo<TEyesight>(page.getResult());
+        List<TEyesightCustom> ListEyesight=tEyesightService.ListEyesight();
+        PageInfo<TEyesightCustom> pageInfo1=new PageInfo<TEyesightCustom>(page.getResult());
         return CommonResult.success(pageInfo1);
     }
 

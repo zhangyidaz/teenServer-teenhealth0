@@ -2,10 +2,10 @@ spring:
   datasource:
     #数据源基本配置
     name: mysql
-    url: jdbc:mysql://localhost:3306/adolescent_health?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-#    url: jdbc:mysql://47.97.157.98:3306/adolescent_health?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#    url: jdbc:mysql://localhost:3306/adolescent_health?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://47.97.157.98:3306/adolescent_health?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
-    password: 123123
+    password: 1234
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
     # 扩展插件

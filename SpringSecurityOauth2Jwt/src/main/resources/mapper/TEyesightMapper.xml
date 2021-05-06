@@ -17,6 +17,35 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="upload_time" jdbcType="TIMESTAMP" property="uploadtime" />
   </resultMap>
+
+  <resultMap id="StudentResultMap" type="springboot.mybatis.po.TEyesightCustom">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+    <result column="left_nwz" jdbcType="VARCHAR" property="leftNwz" />
+    <result column="right_nwz" jdbcType="VARCHAR" property="rightNwz" />
+    <result column="left_sxz" jdbcType="VARCHAR" property="leftSxz" />
+    <result column="right_sxz" jdbcType="VARCHAR" property="rightSxz" />
+    <result column="left_sxx" jdbcType="VARCHAR" property="leftSxx" />
+    <result column="right_sxx" jdbcType="VARCHAR" property="rightSxx" />
+    <result column="test_advice" jdbcType="VARCHAR" property="testadvice" />
+    <result column="train_plan" jdbcType="VARCHAR" property="trainplan" />
+    <result column="eating_advice" jdbcType="VARCHAR" property="eatingadvice" />
+    <result column="execising_advice" jdbcType="VARCHAR" property="execisingadvice" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="upload_time" jdbcType="TIMESTAMP" property="uploadtime" />
+
+    <association property="tStudent" javaType="springboot.mybatis.po.TStudent">
+      <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
+      <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+      <result column="class_id" jdbcType="VARCHAR" property="classId" />
+      <result column="school_id" jdbcType="VARCHAR" property="schoolId" />
+      <result column="age" jdbcType="INTEGER" property="age" />
+      <result column="sex" jdbcType="INTEGER" property="sex" />
+      <result column="left_sight" jdbcType="DOUBLE" property="leftSight" />
+      <result column="right_sight" jdbcType="DOUBLE" property="rightSight" />
+    </association>
+  </resultMap>
+
   <sql id="Example_Where_Clause">
 
     <where>
@@ -80,6 +109,13 @@
     id, student_id, left_nwz, right_nwz, left_sxz, right_sxz, left_sxx, right_sxx, test_advice,
     train_plan, eating_advice, execising_advice, create_time, upload_time
   </sql>
+
+  <sql id="Student_Column_List">
+    e.id, e.student_id, e.left_nwz, e.right_nwz, e.left_sxz, e.right_sxz, e.left_sxx, e.right_sxx, e.test_advice,
+    e.train_plan, e.eating_advice, e.execising_advice, e.create_time, e.upload_time,
+    s.student_no,s.student_name,s.class_id,s.school_id,s.age,s.sex,s.left_sight,s.right_sight
+  </sql>
+
   <select id="selectByExample" parameterType="springboot.mybatis.po.TEyesightExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -102,11 +138,21 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
-  <select id="ListEyesight" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_eyesight
-
+  <!--查询每个学生最新的视力测试数据-->
+  <select id="ListEyesight" parameterType="java.lang.String" resultMap="StudentResultMap">
+    SELECT
+    <include refid="Student_Column_List" />
+    FROM
+    t_eyesight e,t_student s,
+    (SELECT    *
+    FROM    t_eyesight,
+    (SELECT
+    id AS idd, student_id AS studentid, MAX(create_time) AS maxdate
+    FROM    t_eyesight
+    GROUP BY    student_id
+    ) x
+    WHERE x.idd = t_eyesight.id ) y
+    WHERE    y.id = e.id   AND e.student_id = s.id
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

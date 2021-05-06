@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springboot.mybatis.mapper.TEyesightMapper;
 import springboot.mybatis.po.TEyesight;
+import springboot.mybatis.po.TEyesightCustom;
 import springboot.service.TEyesightService;
 
 import java.util.List;
@@ -20,7 +21,7 @@ private TEyesightMapper tEyesightMapper;
 
     //在页面显示所有学生视力信息
     @Override
-    public List<TEyesight> ListEyesight(){
+    public List<TEyesightCustom> ListEyesight(){
         return tEyesightMapper.ListEyesight();
     }
 
