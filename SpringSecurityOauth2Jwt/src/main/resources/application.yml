@@ -5,7 +5,7 @@ spring:
 #    url: jdbc:mysql://localhost:3306/adolescent_health?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     url: jdbc:mysql://47.97.157.98:3306/adolescent_health?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
-    password: 1234
+    password: jkzx:2021
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
     # 扩展插件
